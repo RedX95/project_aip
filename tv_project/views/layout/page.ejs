@@ -8,32 +8,31 @@
     <script src="/bootstrap/dist/js/bootstrap.js"></script>
 </head>
 <body>
-    <nav role="navigation" >
+    <nav role="navigation">
+        <div class="navbar-header">
+            <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                <span class="sr-only">Переключить навигацию</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">TV Каталог</a>
+        </div>
 
-<div class="navbar-header">
-<button type="button" data-target="#navbarCollapse" data-
-toggle="collapse" class="navbar-toggle">
-<span class="sr-only">Переключить навигацию</span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-<span class="icon-bar"></span>
-</button>
-<a href="/" class="navbar-brand">TV Каталог</a>
-</div>
-
-<div id="navbarCollapse" >
-<ul class="nav navbar-nav">
-        <li><a href="/samsung">Samsung</a></li>
-        <li><a href="/lg">LG</a></li>
-        <li><a href="/sony">Sony</a></li>
-        <li><a href="/philips">Philips</a></li>
-        <li><a href="/tcl">TCL</a></li>
-</ul>
-<ul class="nav navbar-nav navbar-right">
-<li><a href="#">Войти</a></li>
-</ul>
-</div>
-</nav>
+        <div id="navbarCollapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/samsung">Samsung</a></li>
+                <li><a href="/lg">LG</a></li>
+                <li><a href="/sony">Sony</a></li>
+                <li><a href="/philips">Philips</a></li>
+                <li><a href="/tcl">TCL</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Войти</a></li>
+            </ul>
+        </div>
+    </nav>
+    
     <div class="container">
         <%- body %>
     </div>
