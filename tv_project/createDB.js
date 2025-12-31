@@ -1,4 +1,5 @@
 // Файл: tv_project/createDB.js
+var data = require('./data.js').data;
 var MongoClient = require("mongodb").MongoClient;
 
 MongoClient.connect("mongodb://localhost:27017/tv_project", function(err, db) {
