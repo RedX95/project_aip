@@ -1,27 +1,31 @@
 // Файл: tv_project/createDB.js
 var mongoose = require('mongoose');
-
 mongoose.connect('mongodb://localhost/tv_project');
+var Tv = require('./models/tv').Tv;
 
-var Tv = mongoose.model('Tv', { 
-    model: String,
-    brand: String,
-    price: Number
-});
-
-var samsungTv = new Tv({ 
-    model: 'QLED Q80',
+// Создание телевизора с проверкой схемы
+var testTv = new Tv({
+    title: 'Samsung QLED Q80',
+    model: 'QE65Q80TAU',
     brand: 'Samsung',
-    price: 120000
+    diagonal: 65,
+    price: 120000,
+    display_technology: 'QLED',
+    features: ['Smart TV', 'HDR10+', '4K'],
+    energy_class: 'A+'
 });
 
-// Используем .then()/.catch() вместо callback
-samsungTv.save()
-    .then(function() {
-        console.log('✅ Телевизор сохранен в базе через Mongoose');
+// Использование метода схемы
+console.log(testTv.getInfo());
+
+testTv.save()
+    .then(function(savedTv) {
+        console.log('✅ Телевизор сохранен:', savedTv.title);
+        // Использование метода после сохранения
+        console.log('📝 Информация:', savedTv.getInfo());
     })
     .catch(function(err) {
-        console.log('Ошибка:', err);
+        console.log('❌ Ошибка валидации:', err.message);
     })
     .finally(function() {
         mongoose.disconnect();
