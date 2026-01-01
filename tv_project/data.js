@@ -1,29 +1,43 @@
-// Файл: tv_project/data.js
 var data = [{
     title: 'Samsung QLED Q80',
-    nick: 'samsung',
-    avatar: '/images/samsung.jpg',
-    desc: 'QLED телевизор с технологией Quantum Dot, 4K разрешение, HDR10+'
+    nick: 'samsung_q80',
+    diagonal: 65,
+    price: 120000,
+    display_technology: 'QLED',
+    features: ['Smart TV', 'HDR10+', '4K', 'Quantum Dot'],
+    energy_class: 'A+'
 }, {
     title: 'LG OLED C3',
-    nick: 'lg',
-    avatar: '/images/lg.jpg',
-    desc: 'OLED телевизор с процессором α9 Gen6, технологией webOS'
+    nick: 'lg_c3',
+    diagonal: 55,
+    price: 89990,
+    display_technology: 'OLED',
+    features: ['Smart TV', 'Dolby Vision', 'webOS', 'α9 Gen6'],
+    energy_class: 'A+'
 }, {
     title: 'Sony Bravia XR',
-    nick: 'sony',
-    avatar: '/images/sony.jpg',
-    desc: 'Телевизор с когнитивным процессором XR, технологией Acoustic Surface'
+    nick: 'sony_xr',
+    diagonal: 75,
+    price: 149990,
+    display_technology: 'LCD',
+    features: ['Smart TV', 'Acoustic Surface', 'Google TV', 'XR Processor'],
+    energy_class: 'A'
 }, {
     title: 'Philips Ambilight',
-    nick: 'philips',
-    avatar: '/images/philips.jpg',
-    desc: 'Телевизор с технологией Ambilight для иммерсивного просмотра'
+    nick: 'philips_amb',
+    diagonal: 58,
+    price: 75990,
+    display_technology: 'OLED',
+    features: ['Smart TV', 'Ambilight', 'HDR', 'P5 Processor'],
+    energy_class: 'A'
 }, {
     title: 'TCL Mini LED',
-    nick: 'tcl',
-    avatar: '/images/tcl.jpg',
-    desc: 'Mini-LED телевизор с высоким уровнем яркости и контрастности'
+    nick: 'tcl_mini',
+    diagonal: 70,
+    price: 68990,
+    display_technology: 'Mini-LED',
+    features: ['Smart TV', 'Roku TV', 'HDR', 'Mini-LED Pro'],
+    energy_class: 'A+'
 }];
 
 module.exports.data = data;
