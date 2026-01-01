@@ -1,22 +1,20 @@
-// Альтернативная версия file.js
+// Файл: tv_project/file.js
 var async = require("async")
 
-var numbers_to_check = [1, "два", 3, 4, 5]
-
-async.each(
-    numbers_to_check,
-    function(element, report) {
-        if(typeof element === "number") {
-            report()
-        } else {
-            report("Нашли не число: " + element)
-        }
+async.series([
+    function(callback) {
+        callback(null, "MAMA")
     },
-    function(info) {
-        if(info) {
-            console.log(info)
-        } else {
-            console.log("Проверка прошла успешно. Все элементы массива являются числами")
-        }
+    function(callback) {
+        callback(null, "MЫЛА")
+    },
+    function(callback) {
+        callback(null, "РАМУ")
     }
-)
+], function(err, result) {
+    if(err) {
+        console.log("Ошибка: " + err)
+    } else {
+        console.log(result.join(" "))   
+    }
+})
