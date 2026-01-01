@@ -1,22 +1,29 @@
 // Файл: tv_project/createDB.js
-var data = require('./data.js').data;
 var MongoClient = require("mongodb").MongoClient;
+var data = require("./data.js").data;
 
 MongoClient.connect("mongodb://localhost:27017/tv_project", function(err, db) {
     if(err) {
         console.error("Ошибка подключения к MongoDB:", err.message);
-        console.log("Возможно, сервер MongoDB не запущен.");
-        console.log("Запустите его командой: Start-Service MongoDB (PowerShell от администратора)");
+        console.log("Убедитесь, что сервер MongoDB запущен (Start-Service MongoDB)");
         return;
     }
     
-    console.log("✅ Подключение к MongoDB успешно!");
+    console.log("Подключение к MongoDB успешно!");
     
-    var collection = db.collection("tvs");
-    collection.insertOne({model: "Samsung QLED Q80"}, function(err, result) {
+    // Очищаем базу перед заполнением
+    db.dropDatabase(function(err) {
         if(err) throw err;
-        console.log("📺 Телевизор добавлен в базу данных");
-        db.close();
-        console.log("Соединение закрыто");
+        console.log("Старая база данных удалена");
+        
+        var collection = db.collection("tvs");
+        
+        // Вставляем все данные из модуля data.js
+        collection.insertMany(data, function(err, result) {
+            if(err) throw err;
+            console.log("Добавлено телевизоров: " + result.insertedCount);
+            console.log("Данные приложения записаны в базу данных");
+            db.close();
+        });
     });
 });
