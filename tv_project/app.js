@@ -4,8 +4,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
+var routes = require('./routes/index');
+var users = require('./routes/users');
+var tvRouter = require('./routes/tv');
 
-// ПОДКЛЮЧЕНИЕ БАЗЫ ДАННЫХ (п.10.1) 
+// ПОДКЛЮЧЕНИЕ БАЗЫ ДАННЫХ 
 mongoose
   .connect('mongodb://localhost/tv_project')
   .then(() => {
@@ -38,9 +41,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
-//  РОУТЫ 
+//  РОУТЫ   
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/tv', tvRouter);
 
 //  404 
 app.use(function(req, res, next) {
