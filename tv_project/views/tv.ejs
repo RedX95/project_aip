@@ -1,0 +1,16 @@
+<h1><%= title %></h1>
+
+<ul>
+  <li><b>Бренд:</b> <%= brand %></li>
+  <li><b>Диагональ:</b> <%= diagonal %> дюймов</li>
+  <li><b>Цена:</b> <%= price %> ₽</li>
+  <li><b>Технология экрана:</b> <%= display_technology %></li>
+  <li><b>Класс энергопотребления:</b> <%= energy_class %></li>
+</ul>
+
+<h3>Функции:</h3>
+<ul>
+  <% features.forEach(function(f) { %>
+    <li><%= f %></li>
+  <% }) %>
+</ul>
