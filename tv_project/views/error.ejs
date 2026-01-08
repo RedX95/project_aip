@@ -1,3 +1,81 @@
-<h1><%= message %></h1>
-<h2><%= error.status %></h2>
-<pre><%= error.stack %></pre>
+<div class="error-container">
+    <h1>🚨 Ошибка <%= error.status || 500 %></h1>
+    
+    <div class="error-message">
+        <h2><%= message %></h2>
+        
+        <% if (error.status == 404) { %>
+            <p>Запрошенная страница не найдена.</p>
+            <p>Проверьте правильность URL или вернитесь на главную страницу.</p>
+        <% } else { %>
+            <p>Произошла внутренняя ошибка сервера.</p>
+        <% } %>
+    </div>
+    
+    <div class="error-details">
+        <% if (error.stack && env === 'development') { %>
+            <h3>Детали ошибки (только для разработки):</h3>
+            <pre><code><%= error.stack %></code></pre>
+        <% } %>
+    </div>
+    
+    <div class="error-actions">
+        <a href="/" class="btn">🏠 На главную</a>
+        <button onclick="history.back()" class="btn btn-secondary">← Назад</button>
+    </div>
+</div>
+
+<style>
+    .error-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 40px;
+        text-align: center;
+    }
+    
+    .error-container h1 {
+        color: #dc3545;
+        font-size: 3em;
+        margin-bottom: 20px;
+    }
+    
+    .error-message {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 30px 0;
+    }
+    
+    .error-message h2 {
+        color: #721c24;
+        margin-bottom: 10px;
+    }
+    
+    .error-details {
+        background: #343a40;
+        color: #f8f9fa;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        text-align: left;
+        overflow-x: auto;
+    }
+    
+    .error-details pre {
+        margin: 0;
+        white-space: pre-wrap;
+    }
+    
+    .error-details code {
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+    }
+    
+    .error-actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+</style>

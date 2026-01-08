@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Module dependencies.
+ * Модуль зависимостей.
  */
 
 var app = require('../app');
@@ -9,20 +9,20 @@ var debug = require('debug')('tv-project:server');
 var http = require('http');
 
 /**
- * Get port from environment and store in Express.
+ * Получение порта из окружения
  */
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
- * Create HTTP server.
+ * Создание HTTP сервера
  */
 
 var server = http.createServer(app);
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Слушаем указанный порт
  */
 
 server.listen(port);
@@ -30,19 +30,19 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
- * Normalize a port into a number, string, or false.
+ * Нормализация порта в число, строку или false
  */
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
   if (isNaN(port)) {
-    // named pipe
+    // именованный канал
     return val;
   }
 
   if (port >= 0) {
-    // port number
+    // номер порта
     return port;
   }
 
@@ -50,7 +50,7 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Обработчик ошибок для HTTP сервера
  */
 
 function onError(error) {
@@ -62,7 +62,7 @@ function onError(error) {
     ? 'Pipe ' + port
     : 'Port ' + port;
 
-  // handle specific listen errors with friendly messages
+  // обработка специфичных ошибок
   switch (error.code) {
     case 'EACCES':
       console.error(bind + ' requires elevated privileges');
@@ -78,7 +78,7 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Событие listening
  */
 
 function onListening() {
@@ -87,4 +87,7 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  
+  console.log('🚀 Сервер запущен на http://localhost:' + port);
+  console.log('📺 Каталог телевизоров готов к использованию');
 }

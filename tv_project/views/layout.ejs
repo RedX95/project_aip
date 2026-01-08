@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid var(--primary);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo i {
+            font-size: 2.5em;
+            color: var(--primary);
+        }
+        
+        h1 {
+            color: var(--primary);
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .tagline {
+            color: #6b7280;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+        
+        nav {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .nav-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .nav-title {
+            font-size: 1.4em;
+            color: var(--dark);
+            font-weight: 600;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+        }
+        
+        .stat {
+            background: var(--light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: #4b5563;
+        }
+        
+        .stat i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+        }
+        
+        .nav-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--light);
+            color: var(--dark);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .nav-link:hover {
+            background: white;
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(37, 99, 235, 0.2);
+        }
+        
+        .nav-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            font-size: 1.2em;
+        }
+        
+        .nav-info {
+            flex: 1;
+        }
+        
+        .nav-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .nav-price {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .main-content {
+            min-height: 500px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+            font-size: 0.9em;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-link {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: var(--secondary);
+        }
+    
+        
+        .brand-btn {
+            padding: 8px 20px;
+            border: 2px solid var(--light);
+            background: white;
+            color: var(--dark);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .brand-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .brand-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .nav-item {
+                min-width: 100%;
+            }
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-tv"></i>
+                <div>
+                    <h1>Каталог телевизоров</h1>
+                    <p class="tagline">Лучший выбор телевизоров от ведущих брендов</p>
+                </div>
+                <i class="fas fa-tv"></i>
+            </div>
+        </header>
+        
+        <nav>
+            <div class="nav-header">
+                <div class="nav-title">
+                    <i class="fas fa-list"></i> Быстрый доступ
+                </div>
+                <% if (stats) { %>
+                <div class="stats">
+                    <div class="stat">
+                        <i class="fas fa-tv"></i> <%= stats.total || 0 %> моделей
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-tag"></i> <%= stats.brands || 0 %> брендов
+                    </div>
+                </div>
+                <% } %>
+            </div>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">
+                        <div class="nav-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <div class="nav-info">
+                            <div class="nav-title">Главная страница</div>
+                            <div class="nav-price">Все телевизоры</div>
+                        </div>
+                    </a>
+                </li>
+                
+                <% if (menu && menu.length > 0) { %>
+                    <% menu.forEach(function(item) { %>
+                        <li class="nav-item">
+                            <a href="/tv/<%= item.nick %>" class="nav-link">
+                                <div class="nav-icon">
+                                    <% if (item.brand === 'Samsung') { %>
+                                        <i class="fas fa-bolt"></i>
+                                    <% } else if (item.brand === 'LG') { %>
+                                        <i class="fas fa-infinity"></i>
+                                    <% } else if (item.brand === 'Sony') { %>
+                                        <i class="fas fa-play-circle"></i>
+                                    <% } else if (item.brand === 'Philips') { %>
+                                        <i class="fas fa-lightbulb"></i>
+                                    <% } else if (item.brand === 'TCL') { %>
+                                        <i class="fas fa-star"></i>
+                                    <% } else { %>
+                                        <i class="fas fa-tv"></i>
+                                    <% } %>
+                                </div>
+                                <div class="nav-info">
+                                    <div class="nav-title"><%= item.title %></div>
+                                    <div class="nav-price"><%= item.price ? item.price.toLocaleString('ru-RU') : '0' %> ₽</div>
+                                </div>
+                            </a>
+                        </li>
+                    <% }) %>
+                <% } %>
+            </ul>
+        </nav>
+        
+        <main class="main-content">
+            <%- body %>
+        </main>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="/" class="footer-link">
+                    <i class="fas fa-home"></i> Главная
+                </a>
+                <a href="javascript:location.reload()" class="footer-link">
+                    <i class="fas fa-sync-alt"></i> Обновить
+                </a>
+            </div>
+            <p>© 2024 Каталог телевизоров. Все права защищены.</p>
+            <p>Для обновления базы данных выполните: <code>node createDB.js</code></p>
+        </footer>
+    </div>
+    
+    <script></script>
+</body>
+</html>

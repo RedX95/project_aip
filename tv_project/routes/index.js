@@ -2,37 +2,39 @@ const express = require('express');
 const router = express.Router();
 const Tv = require('../models/tv');
 
-router.get('/', async (req, res, next) => {
-    try {
-        const tvs = await Tv.find();
-
-        res.render('index', {
-            title: 'Главная',
-            menu: tvs
-        });
-    } catch (err) {
-        next(err);
-    }
-});
-
-
-/* GET home page. */
+/* GET главная страница. */
 router.get('/', async function(req, res, next) {
   try {
-    const menu = await Tv.find({}, { _id: 0, title: 1, model: 1 });
-
-    // 🔹 ЗАПИСЬ COOKIE
-    res
-      .cookie('greeting', 'Hi!!!')
-      .render('index', {
-        title: 'TV Catalog',
-        menu: menu
-      });
-
+    // Получаем все телевизоры для меню и главной страницы
+    const tvs = await Tv.find({}, 'title nick brand image price diagonal')
+      .sort({ brand: 1, price: 1 });
+    
+    // Группируем телевизоры по брендам
+    const tvsByBrand = {};
+    tvs.forEach(tv => {
+      if (!tvsByBrand[tv.brand]) {
+        tvsByBrand[tv.brand] = [];
+      }
+      tvsByBrand[tv.brand].push(tv);
+    });
+    
+    // Статистика
+    const stats = {
+      total: tvs.length,
+      brands: Object.keys(tvsByBrand).length,
+      minPrice: Math.min(...tvs.map(tv => tv.price)),
+      maxPrice: Math.max(...tvs.map(tv => tv.price))
+    };
+    
+    res.render('index', { 
+      title: 'Каталог телевизоров - Главная',
+      menu: tvs,
+      tvsByBrand: tvsByBrand,
+      stats: stats
+    });
   } catch (err) {
     next(err);
   }
 });
 
-console.log(Tv);
 module.exports = router;

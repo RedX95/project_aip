@@ -1,30 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const Tv = require('../models/tv');  
+const Tv = require('../models/tv');
 
-router.get('/:model', async (req, res, next) => {
-    try {
-        const tv = await Tv.findOne({ model: req.params.model });
-
-        if (!tv) return next(new Error('Нет такого телевизора'));
-
-        const menu = await Tv.find({}, { _id: 0, title: 1, model: 1 });
-
-        res.render('tv_model', {
-            title: tv.title,
-            picture: '/images/tv.png',
-            desc: `
-Бренд: ${tv.brand}
-Диагональ: ${tv.diagonal}"
-Цена: ${tv.price} ₽
-Технология: ${tv.display_technology}
-Класс энергопотребления: ${tv.energy_class}
-`,
-            menu: menu
-        });
-    } catch (err) {
-        next(err);
+/* GET страница телевизора по nick. */
+router.get('/:nick', async function(req, res, next) {
+  try {
+    // Находим телевизор по nick
+    const tv = await Tv.findOne({ nick: req.params.nick });
+    
+    if (!tv) {
+      const err = new Error('Телевизор не найден');
+      err.status = 404;
+      throw err;
     }
+    
+    // Получаем все телевизоры для меню
+    const menu = await Tv.find({}, 'title nick brand')
+      .sort({ brand: 1, title: 1 });
+    
+    // Получаем другие телевизоры того же бренда (рекомендации)
+    const similarTvs = await Tv.find({
+      brand: tv.brand,
+      nick: { $ne: tv.nick } // исключаем текущий телевизор
+    }, 'title nick image price')
+      .limit(3)
+      .sort({ price: 1 });
+    
+    res.render('tv', {
+      title: tv.title,
+      tv: tv,
+      menu: menu,
+      similarTvs: similarTvs
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 module.exports = router;

@@ -1,3 +1,441 @@
-<% layout('layout/page.ejs') %>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
+<h2 class="welcome-title">
+    <i class="fas fa-star"></i> Добро пожаловать в каталог телевизоров!
+</h2>
+
+<div class="welcome-message">
+    <p>Здесь представлены лучшие модели телевизоров от ведущих мировых производителей. Выбирайте по характеристикам, сравнивайте цены и находите идеальный вариант для вашего дома!</p>
+</div>
+
+<!-- Отображение телевизоров по брендам -->
+<% if (tvsByBrand && Object.keys(tvsByBrand).length > 0) { %>
+    <% Object.keys(tvsByBrand).forEach(function(brand) { %>
+        <div class="brand-category">
+            <h3 class="brand-title">
+                <% if (brand === 'Samsung') { %>
+                    <i class="fab fa-galactic-republic"></i>
+                <% } else if (brand === 'LG') { %>
+                    <i class="fab fa-aws"></i>
+                <% } else if (brand === 'Sony') { %>
+                    <i class="fab fa-playstation"></i>
+                <% } else if (brand === 'Philips') { %>
+                    <i class="fas fa-lightbulb"></i>
+                <% } else if (brand === 'TCL') { %>
+                    <i class="fas fa-star"></i>
+                <% } else { %>
+                    <i class="fas fa-tv"></i>
+                <% } %>
+                <%= brand %>
+                <span class="brand-count">(<%= tvsByBrand[brand].length %> модели)</span>
+            </h3>
+            
+            <div class="tv-grid">
+                <% tvsByBrand[brand].forEach(function(tv) { %>
+                    <div class="tv-card">
+                        <div class="tv-image">
+                            <img src="<%= tv.image || '/images/tv.png' %>" alt="<%= tv.title %>" 
+                                 onerror="this.src='/images/tv.png'">
+                            <div class="tv-badge"><%= tv.brand %></div>
+                        </div>
+                        
+                        <div class="tv-content">
+                            <h4 class="tv-title">
+                                <a href="/tv/<%= tv.nick %>"><%= tv.title %></a>
+                            </h4>
+                            
+                            <div class="tv-specs">
+                                <div class="spec">
+                                    <i class="fas fa-expand-alt"></i>
+                                    <span><%= tv.diagonal %>"</span>
+                                </div>
+                                <div class="spec">
+                                    <i class="fas fa-bolt"></i>
+                                    <span><%= tv.display_technology %></span>
+                                </div>
+                            </div>
+                            
+                            <div class="tv-price">
+                                <i class="fas fa-tag"></i>
+                                <span class="price"><%= tv.price.toLocaleString('ru-RU') %> ₽</span>
+                            </div>
+                            
+                            <div class="tv-actions">
+                                <a href="/tv/<%= tv.nick %>" class="btn-details">
+                                    <i class="fas fa-info-circle"></i> Подробнее
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    <% }) %>
+    
+    <!-- Статистика -->
+    <div class="stats-summary">
+        <h3><i class="fas fa-chart-bar"></i> Статистика каталога:</h3>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #3b82f6;">
+                    <i class="fas fa-tv"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value"><%= stats.total || 0 %></div>
+                    <div class="stat-label">Всего моделей</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #8b5cf6;">
+                    <i class="fas fa-tags"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value"><%= stats.brands || 0 %></div>
+                    <div class="stat-label">Брендов</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #10b981;">
+                    <i class="fas fa-arrow-down"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value"><%= stats.minPrice ? stats.minPrice.toLocaleString('ru-RU') : '0' %> ₽</div>
+                    <div class="stat-label">Минимальная цена</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: #ef4444;">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+                <div class="stat-info">
+                    <div class="stat-value"><%= stats.maxPrice ? stats.maxPrice.toLocaleString('ru-RU') : '0' %> ₽</div>
+                    <div class="stat-label">Максимальная цена</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<% } else { %>
+    <div class="empty-state">
+        <div class="empty-icon">
+            <i class="fas fa-tv-slash"></i>
+        </div>
+        <h3>Каталог пуст</h3>
+        <p>В каталоге пока нет телевизоров. Для добавления данных выполните:</p>
+        <code>node createDB.js</code>
+        <p class="empty-actions">
+            <a href="javascript:location.reload()" class="btn-refresh">
+                <i class="fas fa-sync-alt"></i> Обновить страницу
+            </a>
+        </p>
+    </div>
+<% } %>
+
+<style>
+    .welcome-title {
+        color: #1f2937;
+        font-size: 1.8em;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .welcome-title i {
+        color: #3b82f6;
+    }
+    
+    .welcome-message {
+        background: linear-gradient(135deg, #e0e7ff, #f3f4f6);
+        border-left: 4px solid #3b82f6;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    
+    .welcome-message p {
+        margin: 0;
+        color: #4b5563;
+        line-height: 1.7;
+    }
+    
+    .brand-category {
+        margin-bottom: 40px;
+    }
+    
+    .brand-title {
+        color: #1f2937;
+        font-size: 1.5em;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e5e7eb;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .brand-count {
+        font-size: 0.8em;
+        color: #6b7280;
+        background: #f3f4f6;
+        padding: 4px 10px;
+        border-radius: 12px;
+    }
+    
+    .tv-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+    
+    .tv-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid #e5e7eb;
+    }
+    
+    .tv-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+    
+    .tv-image {
+        position: relative;
+        height: 200px;
+        overflow: hidden;
+        background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    }
+    
+    .tv-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .tv-card:hover .tv-image img {
+        transform: scale(1.05);
+    }
+    
+    .tv-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(37, 99, 235, 0.9);
+        color: white;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8em;
+        font-weight: 600;
+    }
+    
+    .tv-content {
+        padding: 20px;
+    }
+    
+    .tv-title {
+        margin: 0 0 15px 0;
+        font-size: 1.2em;
+        line-height: 1.4;
+    }
+    
+    .tv-title a {
+        color: #1f2937;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .tv-title a:hover {
+        color: #3b82f6;
+    }
+    
+    .tv-specs {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+    
+    .spec {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: #6b7280;
+        font-size: 0.9em;
+    }
+    
+    .spec i {
+        color: #3b82f6;
+    }
+    
+    .tv-price {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+    
+    .tv-price i {
+        color: #10b981;
+    }
+    
+    .price {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: #10b981;
+    }
+    
+    .tv-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .btn-details {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        text-decoration: none;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    
+    .btn-details:hover {
+        background: linear-gradient(135deg, #2563eb, #1d4ed8);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+    }
+    
+    .stats-summary {
+        background: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 40px;
+        border: 2px solid #e5e7eb;
+    }
+    
+    .stats-summary h3 {
+        color: #1f2937;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+    
+    .stat-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 20px;
+        background: #f9fafb;
+        border-radius: 12px;
+        transition: transform 0.3s;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-3px);
+    }
+    
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: white;
+        font-size: 1.5em;
+    }
+    
+    .stat-info {
+        flex: 1;
+    }
+    
+    .stat-value {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #1f2937;
+        margin-bottom: 5px;
+    }
+    
+    .stat-label {
+        color: #6b7280;
+        font-size: 0.9em;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+    }
+    
+    .empty-icon {
+        font-size: 4em;
+        color: #d1d5db;
+        margin-bottom: 20px;
+    }
+    
+    .empty-state h3 {
+        color: #374151;
+        margin-bottom: 10px;
+    }
+    
+    .empty-state p {
+        color: #6b7280;
+        margin-bottom: 10px;
+    }
+    
+    .empty-state code {
+        display: inline-block;
+        background: #1f2937;
+        color: #f3f4f6;
+        padding: 10px 20px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-family: 'Courier New', monospace;
+    }
+    
+    .empty-actions {
+        margin-top: 30px;
+    }
+    
+    .btn-refresh {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        color: white;
+        text-decoration: none;
+        padding: 12px 25px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s;
+    }
+    
+    .btn-refresh:hover {
+        background: linear-gradient(135deg, #7c3aed, #6d28d9);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(139, 92, 246, 0.3);
+    }
+    
+    @media (max-width: 768px) {
+        .tv-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
